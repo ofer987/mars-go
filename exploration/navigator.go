@@ -27,15 +27,11 @@ func (na *Navigator) move(movement rune) {
 	switch movement {
 	case 'L':
 		na.rover.TurnCounterClockwise()
-		break
 	case 'R':
 		na.rover.TurnClockwise()
-		break
 	case 'M':
 		na.rover.MoveForward()
-		break
 	default:
-		break
 	}
 }
 

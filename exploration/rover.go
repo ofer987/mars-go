@@ -31,15 +31,11 @@ func (ro *Rover) MoveForward() {
 	switch ro.Sense {
 	case 0:
 		ro.Y += 1
-		break
 	case 1:
 		ro.X += 1
-		break
 	case 2:
 		ro.Y -= 1
-		break
 	case 3:
 		ro.X -= 1
-		break
 	}
 }
