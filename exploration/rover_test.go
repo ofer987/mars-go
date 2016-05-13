@@ -1,11 +1,11 @@
-package rover
+package exploration
 
 import (
 	"testing"
 )
 
 func TestTurnCounterClockwise(t *testing.T) {
-	rover := New("Foo", 0, 0, 0)
+	rover := NewRover("Foo", 0, 0, 0)
 
 	expectedSenses := [...]int{3, 2, 1, 0, 3}
 	for _, expectedSense := range expectedSenses {
@@ -18,7 +18,7 @@ func TestTurnCounterClockwise(t *testing.T) {
 }
 
 func TestTurnClockwise(t *testing.T) {
-	rover := New("Foo", 0, 0, 2)
+	rover := NewRover("Foo", 0, 0, 2)
 
 	expectedSenses := [...]int{3, 0, 1, 2, 3, 0}
 	for _, expectedSense := range expectedSenses {
