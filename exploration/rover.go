@@ -6,29 +6,32 @@ type Rover struct {
 	Name  string
 	X     int
 	Y     int
-	Sense int
+	sense Sense
 }
 
-func NewRover(name string, initX int, initY int, sense int) *Rover {
-	r := Rover{Name: name, X: initX, Y: initY, Sense: sense}
-
-	return &r
+func NewRover(name string, initX int, initY int, initSense rune) *Rover {
+	return &Rover{
+		Name:  name,
+		X:     initX,
+		Y:     initY,
+		sense: NewSense(initSense),
+	}
 }
 
 func (ro *Rover) TurnCounterClockwise() {
-	ro.Sense = (ro.Sense - 1) % 4
+	ro.sense = (ro.sense - 1) % 4
 
-	if ro.Sense < 0 {
-		ro.Sense = 4 + ro.Sense
+	if ro.sense < 0 {
+		ro.sense = 3
 	}
 }
 
 func (ro *Rover) TurnClockwise() {
-	ro.Sense = (ro.Sense + 1) % 4
+	ro.sense = (ro.sense + 1) % 4
 }
 
 func (ro *Rover) MoveForward() {
-	switch ro.Sense {
+	switch ro.sense % 4 {
 	case 0:
 		ro.Y += 1
 	case 1:
@@ -39,3 +42,8 @@ func (ro *Rover) MoveForward() {
 		ro.X -= 1
 	}
 }
+
+// func (ro *Rover) String() string {
+// 	strings.Join()
+// 	ro.X.String() + ", " + ro.Y.String() + ", " + ro.sense.String()
+// }

@@ -49,7 +49,7 @@ func (na *Navigator) Navigate() {
 			Name:  na.rover.Name,
 			X:     na.rover.X,
 			Y:     na.rover.Y,
-			Sense: na.rover.Sense,
+			sense: na.rover.sense,
 		}
 
 		na.move(movement)

@@ -7,25 +7,32 @@ import (
 func TestTurnCounterClockwise(t *testing.T) {
 	rover := NewRover("Foo", 0, 0, 0)
 
-	expectedSenses := [...]int{3, 2, 1, 0, 3}
+	expectedSenses := [...]Sense{Sense(3), Sense(2), Sense(1), (0), Sense(3)}
 	for _, expectedSense := range expectedSenses {
 		rover.TurnCounterClockwise()
 
-		if rover.Sense != expectedSense {
-			t.Errorf("The sense of the rover is %v instead of %v.", rover.Sense, expectedSense)
+		if rover.sense != expectedSense {
+			t.Errorf("The sense of the rover is %v instead of %v.", rover.sense, expectedSense)
 		}
 	}
 }
 
 func TestTurnClockwise(t *testing.T) {
-	rover := NewRover("Foo", 0, 0, 2)
+	rover := NewRover("Foo", 0, 0, 'S')
 
-	expectedSenses := [...]int{3, 0, 1, 2, 3, 0}
+	expectedSenses := [...]Sense{
+		Sense(3),
+		Sense(0),
+		Sense(1),
+		Sense(2),
+		Sense(3),
+		Sense(0),
+	}
 	for _, expectedSense := range expectedSenses {
 		rover.TurnClockwise()
 
-		if rover.Sense != expectedSense {
-			t.Errorf("The sense of the rover is %v instead of %v.", rover.Sense, expectedSense)
+		if expectedSense != rover.sense {
+			t.Errorf("The sense of the rover is %v instead of %v.", rover.sense, expectedSense)
 		}
 	}
 }

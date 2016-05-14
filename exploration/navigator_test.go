@@ -1,50 +1,49 @@
 package exploration
 
 import (
+	"reflect"
 	"testing"
 )
 
 func Testmove(t *testing.T) {
 	cases := []struct {
-		startX, startY, startSense          int
-		movements                           rune
-		expectedX, expectedY, expectedSense int
+		startRover    Rover
+		movement      rune
+		expectedRover Rover
 	}{
 		{
-			0, 0, 0,
+			*NewRover("", 0, 0, 'N'),
 			'M',
-			0, 1, 0,
+			*NewRover("", 0, 1, 'N'),
 		},
 		{
-			0, 0, 0,
+			*NewRover("", 0, 0, 'N'),
 			'R',
-			0, 0, 1,
+			*NewRover("", 0, 0, 'E'),
 		},
 		{
-			1, 2, 0,
+			*NewRover("", 1, 2, 'N'),
 			'L',
-			1, 2, 3,
+			*NewRover("", 1, 2, 'W'),
 		},
 		{
-			1, 2, 0,
+			*NewRover("", 1, 2, 'N'),
 			'l',
-			1, 2, 3,
+			*NewRover("", 1, 2, 'W'),
 		},
 		{
-			1, 2, 3,
+			*NewRover("", 1, 2, 'W'),
 			'm',
-			1, 1, 3,
+			*NewRover("", 1, 1, 'W'),
 		},
 	}
 
 	for _, c := range cases {
-		rover := NewRover("Foo", c.startX, c.startY, c.startSense)
-		navigator := NewNavigator("", 999, 999, rover)
+		navigator := NewNavigator("", 999, 999, &c.startRover)
+		navigator.move(c.movement)
 
-		navigator.move(c.movements)
-
-		if rover.X != c.expectedX || rover.Y != c.expectedY {
-			t.Errorf("The rover should have ended at (x, y, sense) = (%v, %v, %v) rather than at (%v, %v, %v)", c.expectedX, c.expectedY, c.expectedSense, rover.X, rover.Y, rover.Sense)
+		if reflect.DeepEqual(c.expectedRover, navigator.rover) {
+			t.Errorf("The rover should have ended at (x, y, sense) = (%v) rather than at (%v)", c.expectedRover, navigator.rover)
 		}
 	}
 }
@@ -79,39 +78,38 @@ func TestBoundaries(t *testing.T) {
 
 func TestNavigate(t *testing.T) {
 	cases := []struct {
-		boundaryX, boundaryY                int
-		startX, startY, startSense          int
-		movements                           string
-		expectedX, expectedY, expectedSense int
+		boundaryX, boundaryY int
+		movements            string
+		startRover           Rover
+		expectedRover        Rover
 	}{
 		{
 			1, 2,
-			1, 2, 0,
 			"LMRLMLM",
-			0, 1, 2,
+			*NewRover("", 1, 2, 'N'),
+			*NewRover("", 0, 1, 'S'),
 		},
 		{
 			2, 2,
-			1, 1, 0,
 			"LMRMRMM",
-			2, 2, 1,
+			*NewRover("", 1, 1, 'N'),
+			*NewRover("", 2, 2, 'E'),
 		},
 		{
 			2, 2,
-			1, 1, 0,
 			"lmrmrmm",
-			2, 2, 1,
+			*NewRover("", 1, 1, 'N'),
+			*NewRover("", 2, 2, 'E'),
 		},
 	}
 
-	for _, c := range cases {
-		rover := NewRover("Foo", c.startX, c.startY, c.startSense)
-		navigator := NewNavigator(c.movements, c.boundaryX, c.boundaryY, rover)
+	for index, c := range cases {
+		navigator := NewNavigator(c.movements, c.boundaryX, c.boundaryY, &c.startRover)
 
 		navigator.Navigate()
 
-		if navigator.rover.X != c.expectedX || navigator.rover.Y != c.expectedY || navigator.rover.Sense != c.expectedSense {
-			t.Errorf("The rover should have ended at (x, y, sense) = (%v, %v, %v) rather than at (%v, %v, %v)", c.expectedX, c.expectedY, c.expectedSense, navigator.rover.X, navigator.rover.Y, navigator.rover.Sense)
+		if !reflect.DeepEqual(*navigator.rover, c.expectedRover) {
+			t.Errorf("Test case %v, The rover should have ended at (x, y, sense) = (%v) rather than at (%v)", index, c.expectedRover, *navigator.rover)
 		}
 	}
 }
