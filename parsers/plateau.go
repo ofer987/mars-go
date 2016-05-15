@@ -15,7 +15,7 @@ func ParsePlateau(input string) (*Plateau, error) {
 
 	results := regex.FindAllStringSubmatch(input, -1)
 
-	if len(results) == 0 {
+	if results == nil || len(results) < 1 {
 		return nil, errors.New("invalid input for Plateau")
 	}
 
