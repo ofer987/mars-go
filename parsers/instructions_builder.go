@@ -2,7 +2,6 @@ package parsers
 
 import (
 	"github.com/ofer987/mars-go/exploration"
-	"regexp"
 )
 
 type Instructions struct {
@@ -22,15 +21,11 @@ func NewInstructions() *Instructions {
 }
 
 func (i *Instructions) Set(input string) {
-	plateauRegex := regexp.MustCompile(`(?i)^Plateau:(\d+)\s+(\d+)$`)
-	landingRegex := regexp.MustCompile(`(?i)^(\w+)\s+Landing\s*:\s*(\d+)\s+(\d+)\s+(\w)$`)
-	instructionsRegex := regexp.MustCompile(`(?i)^(\w+)\s+Instructions\s*:\s*([LMR]+)$`)
-
-	if plateauRegex.MatchString(input) {
+	if plateauRegexp().MatchString(input) {
 		i.setPlateau(input)
-	} else if landingRegex.MatchString(input) {
+	} else if landingRegexp().MatchString(input) {
 		i.setRover(input)
-	} else if instructionsRegex.MatchString(input) {
+	} else if movementsRegexp().MatchString(input) {
 		i.setMovements(input)
 	}
 }

@@ -10,10 +10,12 @@ type Plateau struct {
 	X, Y int
 }
 
-func ParsePlateau(input string) (*Plateau, error) {
-	regex := regexp.MustCompile(`(?i)^Plateau:(\d+)\s+(\d+)$`)
+func plateauRegexp() *regexp.Regexp {
+	return regexp.MustCompile(`(?i)^Plateau:(\d+)\s+(\d+)$`)
+}
 
-	results := regex.FindAllStringSubmatch(input, -1)
+func ParsePlateau(input string) (*Plateau, error) {
+	results := plateauRegexp().FindAllStringSubmatch(input, -1)
 
 	if results == nil || len(results) < 1 {
 		return nil, errors.New("invalid input for Plateau")

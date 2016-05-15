@@ -76,11 +76,41 @@ func TestsetMovements(t *testing.T) {
 func TestSet(t *testing.T) {
 	cases := []struct {
 		input    string
-		expected string
+		expected Instructions
 	}{
 		{
+			"Plateau:1 2",
+			Instructions{
+				1, 2,
+				map[string]exploration.Rover{},
+				map[string]string{},
+			},
+		},
+		{
+			"Rover1 Landing:0 10 E",
+			Instructions{
+				0, 0,
+				map[string]exploration.Rover{
+					"Rover1": *exploration.NewRover("Rover1", 0, 10, 'E'),
+				},
+				map[string]string{},
+			},
+		},
+		{
 			"Rover1 Instructions:MR",
-			"MR",
+			Instructions{
+				0, 0,
+				map[string]exploration.Rover{},
+				map[string]string{"Rover1": "MR"},
+			},
+		},
+		{
+			"Invalid instruction that will be ignored",
+			Instructions{
+				0, 0,
+				map[string]exploration.Rover{},
+				map[string]string{},
+			},
 		},
 	}
 
@@ -89,8 +119,8 @@ func TestSet(t *testing.T) {
 
 		instructions.Set(c.input)
 
-		if instructions.Movements["Rover1"] != "MR" {
-			t.Errorf("Test Case %d: Failed to set the instructions", index)
+		if !reflect.DeepEqual(c.expected, *instructions) {
+			t.Errorf("Test Case %d: Failed to set the instructions. They should be %+v instead of %+v", index, c.expected, *instructions)
 		}
 	}
 }

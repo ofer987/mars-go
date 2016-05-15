@@ -9,10 +9,12 @@ type Movements struct {
 	Name, Moves string
 }
 
-func ParseMovements(input string) (*Movements, error) {
-	regex := regexp.MustCompile(`(?i)^(\w+)\s+Instructions\s*:\s*([LMR]+)$`)
+func movementsRegexp() *regexp.Regexp {
+	return regexp.MustCompile(`(?i)^(\w+)\s+Instructions\s*:\s*([LMR]+)$`)
+}
 
-	results := regex.FindAllStringSubmatch(input, -1)
+func ParseMovements(input string) (*Movements, error) {
+	results := movementsRegexp().FindAllStringSubmatch(input, -1)
 
 	if results == nil || len(results) < 1 {
 		return nil, errors.New("Invalid Input for Rover Instructions")

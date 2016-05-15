@@ -7,10 +7,12 @@ import (
 	"strconv"
 )
 
-func ParseLanding(input string) (*exploration.Rover, error) {
-	regex := regexp.MustCompile(`(?i)^(\w+)\s+Landing\s*:\s*(\d+)\s+(\d+)\s+(\w)$`)
+func landingRegexp() *regexp.Regexp {
+	return regexp.MustCompile(`(?i)^(\w+)\s+Landing\s*:\s*(\d+)\s+(\d+)\s+(\w)$`)
+}
 
-	results := regex.FindAllStringSubmatch(input, -1)
+func ParseLanding(input string) (*exploration.Rover, error) {
+	results := landingRegexp().FindAllStringSubmatch(input, -1)
 
 	if results == nil || len(results) < 1 {
 		return nil, errors.New("Invalid Input for Rover Landing")
