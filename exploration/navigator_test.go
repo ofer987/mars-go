@@ -67,7 +67,7 @@ func TestBoundaries(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		rover := NewRover("Foo", c.X, c.Y, 0)
+		rover := NewRover("Foo", c.X, c.Y, 'N')
 		navigator := NewNavigator("", c.boundaryX, c.boundaryY, rover)
 
 		if navigator.validateBoundary() != c.isWithinBounds {
@@ -108,8 +108,8 @@ func TestNavigate(t *testing.T) {
 
 		navigator.Navigate()
 
-		if !reflect.DeepEqual(*navigator.rover, c.expectedRover) {
-			t.Errorf("Test case %v, The rover should have ended at (x, y, sense) = (%v) rather than at (%v)", index, c.expectedRover, *navigator.rover)
+		if !reflect.DeepEqual(c.startRover, c.expectedRover) {
+			t.Errorf("Test case %v, The rover should have ended at (x, y, sense) = (%v) rather than at (%+v)", index, c.expectedRover, c.startRover)
 		}
 	}
 }

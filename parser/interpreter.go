@@ -5,59 +5,57 @@ import (
 	"regexp"
 )
 
-type Router struct {
+type Interpreter struct {
 	BoundaryX, BoundaryY int
 	Rovers               map[string]exploration.Rover
 	Instructions         map[string]string
 }
 
-func NewRouter() *Router {
+func NewInterpreter() *Interpreter {
 	initRovers := make(map[string]exploration.Rover)
 	initInstructions := make(map[string]string)
 
-	return &Router{
+	return &Interpreter{
 		Rovers:       initRovers,
 		Instructions: initInstructions,
 	}
 }
 
-func (ro *Router) SetValues(inputs []string) {
-	plateauRegex := regexp.MustCompile(`(?i)^(\w+)\s+Instructions\s*:\s*([LMR]+)$`)
+func (i *Interpreter) Interpret(input string) {
+	plateauRegex := regexp.MustCompile(`(?i)^Plateau:(\d+)\s+(\d+)$`)
 	landingRegex := regexp.MustCompile(`(?i)^(\w+)\s+Landing\s*:\s*(\d+)\s+(\d+)\s+(\w)$`)
 	instructionsRegex := regexp.MustCompile(`(?i)^(\w+)\s+Instructions\s*:\s*([LMR]+)$`)
 
-	for _, input := range inputs {
-		if plateauRegex.MatchString(input) {
-			ro.setPlateau(input)
-		} else if landingRegex.MatchString(input) {
-			ro.setRover(input)
-		} else if instructionsRegex.MatchString(input) {
-			ro.setInstructions(input)
-		}
+	if plateauRegex.MatchString(input) {
+		i.setPlateau(input)
+	} else if landingRegex.MatchString(input) {
+		i.setRover(input)
+	} else if instructionsRegex.MatchString(input) {
+		i.setInstructions(input)
 	}
 }
 
-func (ro *Router) setPlateau(input string) {
+func (i *Interpreter) setPlateau(input string) {
 	plateau, err := ParsePlateau(input)
 
 	if err == nil {
-		ro.BoundaryX = plateau.X
-		ro.BoundaryY = plateau.Y
+		i.BoundaryX = plateau.X
+		i.BoundaryY = plateau.Y
 	}
 }
 
-func (ro *Router) setRover(input string) {
+func (i *Interpreter) setRover(input string) {
 	rover, err := ParseLanding(input)
 
 	if err == nil {
-		ro.Rovers[rover.Name] = *rover
+		i.Rovers[rover.Name] = *rover
 	}
 }
 
-func (ro *Router) setInstructions(input string) {
+func (i *Interpreter) setInstructions(input string) {
 	instructions, err := ParseInstructions(input)
 
 	if err == nil {
-		ro.Instructions[instructions.Name] += instructions.Movements
+		i.Instructions[instructions.Name] += instructions.Movements
 	}
 }

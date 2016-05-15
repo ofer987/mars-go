@@ -11,7 +11,7 @@ type Plateau struct {
 }
 
 func ParsePlateau(input string) (*Plateau, error) {
-	regex := regexp.MustCompile(`(?i)^Plateau:(\d+),\s+(\d+)$`)
+	regex := regexp.MustCompile(`(?i)^Plateau:(\d+)\s+(\d+)$`)
 
 	results := regex.FindAllStringSubmatch(input, -1)
 

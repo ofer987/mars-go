@@ -23,6 +23,10 @@ func NewNavigator(
 	}
 }
 
+func (na *Navigator) Rover() *Rover {
+	return na.rover
+}
+
 func (na *Navigator) move(movement rune) {
 	switch movement {
 	case 'L':
@@ -44,18 +48,17 @@ func (na *Navigator) validateBoundary() bool {
 
 func (na *Navigator) Navigate() {
 	for _, movement := range strings.ToUpper(na.movements) {
-		// Copy rover
-		originalRover := Rover{
-			Name:  na.rover.Name,
-			X:     na.rover.X,
-			Y:     na.rover.Y,
-			sense: na.rover.sense,
-		}
+		// Copy rover coordinates
+		originalX := na.rover.X
+		originalY := na.rover.Y
+		originalSense := na.rover.Sense
 
 		na.move(movement)
 
 		if !na.validateBoundary() {
-			na.rover = &originalRover
+			na.rover.X = originalX
+			na.rover.Y = originalY
+			na.rover.Sense = originalSense
 		}
 	}
 }

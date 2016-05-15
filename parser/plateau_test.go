@@ -10,15 +10,15 @@ func TestParsePlateau(t *testing.T) {
 		expected Plateau
 	}{
 		{
-			"Plateau:5, 5",
+			"Plateau:5 5",
 			Plateau{X: 5, Y: 5},
 		},
 		{
-			"Plateau:0, 10",
+			"Plateau:0 10",
 			Plateau{X: 0, Y: 10},
 		},
 		{
-			"plateau:0, 10",
+			"plateau:0 10",
 			Plateau{X: 0, Y: 10},
 		},
 	}
@@ -26,9 +26,9 @@ func TestParsePlateau(t *testing.T) {
 	invalidCases := []struct {
 		input string
 	}{
-		{"Plateau:-10, 10"},
-		{"Plateau:100, -10"},
-		{"Plateau:-10, -10"},
+		{"Plateau:-10 10"},
+		{"Plateau:100 -10"},
+		{"Plateau:-10 -10"},
 	}
 
 	for index, c := range validCases {

@@ -1,12 +1,14 @@
 package exploration
 
-import ()
+import (
+	"strconv"
+)
 
 type Rover struct {
 	Name  string
 	X     int
 	Y     int
-	sense Sense
+	Sense Sense
 }
 
 func NewRover(name string, initX int, initY int, initSense rune) *Rover {
@@ -19,26 +21,26 @@ func NewRover(name string, initX int, initY int, initSense rune) *Rover {
 		Name:  name,
 		X:     initX,
 		Y:     initY,
-		sense: *sense,
+		Sense: *sense,
 	}
 
 	return &rover
 }
 
 func (ro *Rover) TurnCounterClockwise() {
-	ro.sense = (ro.sense - 1) % 4
+	ro.Sense = (ro.Sense - 1) % 4
 
-	if ro.sense < 0 {
-		ro.sense = 3
+	if ro.Sense < 0 {
+		ro.Sense = 3
 	}
 }
 
 func (ro *Rover) TurnClockwise() {
-	ro.sense = (ro.sense + 1) % 4
+	ro.Sense = (ro.Sense + 1) % 4
 }
 
 func (ro *Rover) MoveForward() {
-	switch ro.sense % 4 {
+	switch ro.Sense % 4 {
 	case 0:
 		ro.Y += 1
 	case 1:
@@ -50,7 +52,6 @@ func (ro *Rover) MoveForward() {
 	}
 }
 
-// func (ro *Rover) String() string {
-// 	strings.Join()
-// 	ro.X.String() + ", " + ro.Y.String() + ", " + ro.sense.String()
-// }
+func (ro *Rover) String() string {
+	return strconv.Itoa(ro.X) + " " + strconv.Itoa(ro.Y) + " " + ro.Sense.String()
+}

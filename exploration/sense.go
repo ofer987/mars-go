@@ -1,8 +1,6 @@
 package exploration
 
-import (
-	"strconv"
-)
+import ()
 
 type Sense int
 
@@ -44,5 +42,5 @@ func (se *Sense) Symbol() rune {
 }
 
 func (se *Sense) String() string {
-	return strconv.QuoteRune(se.Symbol())
+	return string(se.Symbol())
 }
