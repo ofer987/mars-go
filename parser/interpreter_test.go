@@ -7,19 +7,6 @@ import (
 	"testing"
 )
 
-// func TestBar(t *testing.T) {
-// 	input := []string{
-// 		"Plateau:5 5",
-// 		"Rover1 Landing:1 2 N",
-// 		"Rover1 Instructions:LMLMLMLMM",
-// 		"Rover2 Landing:3 3 E",
-// 		"Rover2 Instructions:MMRMMRMRRM",
-// 	}
-//
-// 	interpreter := Interpreter{}
-//
-// }
-
 func TestSetRover(t *testing.T) {
 	cases := []struct {
 		input    string
@@ -49,7 +36,7 @@ func TestSetRover(t *testing.T) {
 	}
 }
 
-func TestsetInstructions(t *testing.T) {
+func TestsetMovements(t *testing.T) {
 	cases := []struct {
 		input    string
 		expected string
@@ -76,10 +63,10 @@ func TestsetInstructions(t *testing.T) {
 		interpreter := NewInterpreter()
 		commands := strings.Split(c.input, "\n")
 		for _, command := range commands {
-			interpreter.setInstructions(command)
+			interpreter.setMovements(command)
 		}
 
-		actual := interpreter.Instructions["Rover1"]
+		actual := interpreter.Movements["Rover1"]
 		if !reflect.DeepEqual(c.expected, actual) {
 			t.Errorf("Test case %v: '%+v' should have created %+v instead of %+v", index, c.input, c.expected, actual)
 		}
@@ -102,7 +89,7 @@ func TestInterpret(t *testing.T) {
 
 		interpreter.Interpret(c.input)
 
-		if interpreter.Instructions["Rover1"] != "MR" {
+		if interpreter.Movements["Rover1"] != "MR" {
 			t.Errorf("Test Case %d: Failed to set the instructions", index)
 		}
 	}

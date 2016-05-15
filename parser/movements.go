@@ -5,11 +5,11 @@ import (
 	"regexp"
 )
 
-type Instructions struct {
-	Name, Movements string
+type Movements struct {
+	Name, Moves string
 }
 
-func ParseInstructions(input string) (*Instructions, error) {
+func ParseMovements(input string) (*Movements, error) {
 	regex := regexp.MustCompile(`(?i)^(\w+)\s+Instructions\s*:\s*([LMR]+)$`)
 
 	results := regex.FindAllStringSubmatch(input, -1)
@@ -18,10 +18,10 @@ func ParseInstructions(input string) (*Instructions, error) {
 		return nil, errors.New("Invalid Input for Rover Instructions")
 	}
 
-	instructions := Instructions{
-		Name:      results[0][1],
-		Movements: string(results[0][2]),
+	movements := Movements{
+		Name:  results[0][1],
+		Moves: string(results[0][2]),
 	}
 
-	return &instructions, nil
+	return &movements, nil
 }

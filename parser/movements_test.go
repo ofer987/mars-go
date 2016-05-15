@@ -5,23 +5,23 @@ import (
 	"testing"
 )
 
-func TestParseInstructions(t *testing.T) {
+func TestParseMovements(t *testing.T) {
 	validCases := []struct {
 		input    string
-		expected Instructions
+		expected Movements
 	}{
 		{
 			"Rover1 Instructions: LMRLMLM",
-			Instructions{
-				Name:      "Rover1",
-				Movements: "LMRLMLM",
+			Movements{
+				Name:  "Rover1",
+				Moves: "LMRLMLM",
 			},
 		},
 		{
 			"MrSteel Instructions: LMRMLLLMMrmlM",
-			Instructions{
-				Name:      "MrSteel",
-				Movements: "LMRMLLLMMrmlM",
+			Movements{
+				Name:  "MrSteel",
+				Moves: "LMRMLLLMMrmlM",
 			},
 		},
 	}
@@ -37,18 +37,18 @@ func TestParseInstructions(t *testing.T) {
 	}
 
 	for index, c := range validCases {
-		actual, err := ParseInstructions(c.input)
+		actual, err := ParseMovements(c.input)
 
 		if err != nil {
 			t.Fatalf("Test case %v: an error has occurred: %v", index, err)
 		}
 		if !reflect.DeepEqual(c.expected, *actual) {
-			t.Errorf("Test case %v: instructions should have been %+v instead of %+v", index, c.expected, *actual)
+			t.Errorf("Test case %v: movements should have been %+v instead of %+v", index, c.expected, *actual)
 		}
 	}
 
 	for index, c := range invalidCases {
-		_, err := ParseInstructions(c.input)
+		_, err := ParseMovements(c.input)
 		if err == nil {
 			t.Errorf("Test case %v: The input (%v) should be invalid", index, c.input)
 		}

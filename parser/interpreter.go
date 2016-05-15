@@ -8,16 +8,16 @@ import (
 type Interpreter struct {
 	BoundaryX, BoundaryY int
 	Rovers               map[string]exploration.Rover
-	Instructions         map[string]string
+	Movements            map[string]string
 }
 
 func NewInterpreter() *Interpreter {
 	initRovers := make(map[string]exploration.Rover)
-	initInstructions := make(map[string]string)
+	initMovements := make(map[string]string)
 
 	return &Interpreter{
-		Rovers:       initRovers,
-		Instructions: initInstructions,
+		Rovers:    initRovers,
+		Movements: initMovements,
 	}
 }
 
@@ -31,7 +31,7 @@ func (i *Interpreter) Interpret(input string) {
 	} else if landingRegex.MatchString(input) {
 		i.setRover(input)
 	} else if instructionsRegex.MatchString(input) {
-		i.setInstructions(input)
+		i.setMovements(input)
 	}
 }
 
@@ -52,10 +52,10 @@ func (i *Interpreter) setRover(input string) {
 	}
 }
 
-func (i *Interpreter) setInstructions(input string) {
-	instructions, err := ParseInstructions(input)
+func (i *Interpreter) setMovements(input string) {
+	movements, err := ParseMovements(input)
 
 	if err == nil {
-		i.Instructions[instructions.Name] += instructions.Movements
+		i.Movements[movements.Name] += movements.Moves
 	}
 }
