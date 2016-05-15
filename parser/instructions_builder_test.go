@@ -23,13 +23,13 @@ func TestSetRover(t *testing.T) {
 	}
 
 	for index, c := range cases {
-		interpreter := NewInterpreter()
+		instructions := NewInstructions()
 		commands := strings.Split(c.input, "\n")
 		for _, command := range commands {
-			interpreter.setRover(command)
+			instructions.setRover(command)
 		}
 
-		actual := interpreter.Rovers["Rover1"]
+		actual := instructions.Rovers["Rover1"]
 		if !reflect.DeepEqual(c.expected, actual) {
 			t.Errorf("Test case %v: '%+v' should have created %+v instead of %+v", index, c.input, c.expected, actual)
 		}
@@ -60,20 +60,20 @@ func TestsetMovements(t *testing.T) {
 	}
 
 	for index, c := range cases {
-		interpreter := NewInterpreter()
+		instructions := NewInstructions()
 		commands := strings.Split(c.input, "\n")
 		for _, command := range commands {
-			interpreter.setMovements(command)
+			instructions.setMovements(command)
 		}
 
-		actual := interpreter.Movements["Rover1"]
+		actual := instructions.Movements["Rover1"]
 		if !reflect.DeepEqual(c.expected, actual) {
 			t.Errorf("Test case %v: '%+v' should have created %+v instead of %+v", index, c.input, c.expected, actual)
 		}
 	}
 }
 
-func TestInterpret(t *testing.T) {
+func TestSet(t *testing.T) {
 	cases := []struct {
 		input    string
 		expected string
@@ -85,11 +85,11 @@ func TestInterpret(t *testing.T) {
 	}
 
 	for index, c := range cases {
-		interpreter := NewInterpreter()
+		instructions := NewInstructions()
 
-		interpreter.Interpret(c.input)
+		instructions.Set(c.input)
 
-		if interpreter.Movements["Rover1"] != "MR" {
+		if instructions.Movements["Rover1"] != "MR" {
 			t.Errorf("Test Case %d: Failed to set the instructions", index)
 		}
 	}

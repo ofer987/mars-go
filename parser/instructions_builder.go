@@ -5,23 +5,23 @@ import (
 	"regexp"
 )
 
-type Interpreter struct {
+type Instructions struct {
 	BoundaryX, BoundaryY int
 	Rovers               map[string]exploration.Rover
 	Movements            map[string]string
 }
 
-func NewInterpreter() *Interpreter {
+func NewInstructions() *Instructions {
 	initRovers := make(map[string]exploration.Rover)
 	initMovements := make(map[string]string)
 
-	return &Interpreter{
+	return &Instructions{
 		Rovers:    initRovers,
 		Movements: initMovements,
 	}
 }
 
-func (i *Interpreter) Interpret(input string) {
+func (i *Instructions) Set(input string) {
 	plateauRegex := regexp.MustCompile(`(?i)^Plateau:(\d+)\s+(\d+)$`)
 	landingRegex := regexp.MustCompile(`(?i)^(\w+)\s+Landing\s*:\s*(\d+)\s+(\d+)\s+(\w)$`)
 	instructionsRegex := regexp.MustCompile(`(?i)^(\w+)\s+Instructions\s*:\s*([LMR]+)$`)
@@ -35,7 +35,7 @@ func (i *Interpreter) Interpret(input string) {
 	}
 }
 
-func (i *Interpreter) setPlateau(input string) {
+func (i *Instructions) setPlateau(input string) {
 	plateau, err := ParsePlateau(input)
 
 	if err == nil {
@@ -44,7 +44,7 @@ func (i *Interpreter) setPlateau(input string) {
 	}
 }
 
-func (i *Interpreter) setRover(input string) {
+func (i *Instructions) setRover(input string) {
 	rover, err := ParseLanding(input)
 
 	if err == nil {
@@ -52,7 +52,7 @@ func (i *Interpreter) setRover(input string) {
 	}
 }
 
-func (i *Interpreter) setMovements(input string) {
+func (i *Instructions) setMovements(input string) {
 	movements, err := ParseMovements(input)
 
 	if err == nil {
