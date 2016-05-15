@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	interpreter := parser.NewInterpreter()
+	instructions := parser.NewInstructions()
 	stdinScanner := bufio.NewScanner(os.Stdin)
 
 	for {
@@ -20,15 +20,15 @@ func main() {
 			break
 		}
 
-		interpreter.Interpret(input)
+		instructions.Set(input)
 	}
 
-	for name, rover := range interpreter.Rovers {
-		movements := interpreter.Instructions[name]
+	for name, rover := range instructions.Rovers {
+		movements := instructions.Movements[name]
 		navigator := exploration.NewNavigator(
 			movements,
-			interpreter.BoundaryX,
-			interpreter.BoundaryY,
+			instructions.BoundaryX,
+			instructions.BoundaryY,
 			&rover,
 		)
 
