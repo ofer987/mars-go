@@ -2,7 +2,7 @@
 
 ## Instructions
 
-Source code is in [Go-lang](https://golang.org). 
+Source code is in [Go-lang](https://golang.org).
 1. Install the [Go development environment](https://golang.org/doc/install)
 2. Set up your [GOPATH](https://golang.org/doc/code.html#GOPATH)
 3. Compile `go build .`
@@ -39,6 +39,7 @@ Input 2: Navigation instructions i.e a string containing ('L', 'R', 'M'). Test I
 
 ### Example
 
+```
 Plateau:5 5
 Rover1 Landing:1 2 N
 Rover1 Instructions:LMLMLMLMM
@@ -48,3 +49,4 @@ Rover2 Instructions:MMRMMRMRRM
 Expected Output:
 Rover1:1 3 N
 Rover2:5 1 E
+```
