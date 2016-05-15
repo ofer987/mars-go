@@ -4,14 +4,17 @@
 
 Source code is in [Go-lang](https://golang.org). 
 1. Install the [Go development environment](https://golang.org/doc/install)
-2. Set up your [GoPath](https://golang.org/doc/code.html#GOPATH)
-3. Compile and run the program `go run main.go`
+2. Set up your [GOPATH](https://golang.org/doc/code.html#GOPATH)
+3. Compile `go build .`
+4. Run the program `./mars-go`
+
+*Note*: Not feeling like installing go? No problem! Use the included binary **main.go** (compiled for darwin OS on amd64 architecture)
 
 ### Example files
 
 Try the program using one of the example files, e.g.,
 
-`cat examples/commands.txt | go run main.go`
+`cat examples/commands.txt | ./mars-go`
 
 ## Background
 
