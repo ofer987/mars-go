@@ -4,12 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/ofer987/mars-go/exploration"
-	"github.com/ofer987/mars-go/parser"
+	"github.com/ofer987/mars-go/parsers"
 	"os"
 )
 
 func main() {
-	instructions := parser.NewInstructions()
+	instructions := parsers.NewInstructions()
 	stdinScanner := bufio.NewScanner(os.Stdin)
 
 	for {

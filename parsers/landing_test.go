@@ -1,4 +1,4 @@
-package parser
+package parsers
 
 import (
 	"github.com/ofer987/mars-go/exploration"
