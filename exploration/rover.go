@@ -10,12 +10,19 @@ type Rover struct {
 }
 
 func NewRover(name string, initX int, initY int, initSense rune) *Rover {
-	return &Rover{
+	sense := NewSense(initSense)
+	if sense == nil {
+		return nil
+	}
+
+	rover := Rover{
 		Name:  name,
 		X:     initX,
 		Y:     initY,
-		sense: NewSense(initSense),
+		sense: *sense,
 	}
+
+	return &rover
 }
 
 func (ro *Rover) TurnCounterClockwise() {

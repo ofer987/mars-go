@@ -6,7 +6,7 @@ import (
 
 type Sense int
 
-func NewSense(symbol rune) Sense {
+func NewSense(symbol rune) *Sense {
 	var sense Sense
 
 	switch symbol {
@@ -18,9 +18,11 @@ func NewSense(symbol rune) Sense {
 		sense = 2
 	case 'W':
 		sense = 3
+	default:
+		return nil
 	}
 
-	return sense
+	return &sense
 }
 
 func (se *Sense) Symbol() rune {
